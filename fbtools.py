@@ -25,7 +25,7 @@ def getName(uid, access_token):
     friend_data = json.loads(jfriend_data)
     return friend_data['data'][0]['name']
 
-def getFriendList(uid, access_token):
+def getFriendUIDList(uid, access_token):
     fql_query = 'select uid2 from friend where uid1='+str(uid)
     jfriendsuid = FQLquery(fql_query, access_token)
     friendsuid = json.loads(jfriendsuid)['data']
@@ -33,7 +33,13 @@ def getFriendList(uid, access_token):
     friends = []
     for frienduid in friendsuid:
         uid = frienduid['uid2']
-        #friends.append({'uid': uid, 'name': getName(uid, access_token)})
-        friends.append({'uid': uid})
+        friends.append(uid)
         
+    return friends
+    
+def getFriendNameList(uid, access_token):
+    friend_uids = getFriendUIDList(uid, access_token)
+    friends = []
+    for uid in friend_uids:
+        friends.append({'uid': uid, 'name': getName(uid, access_token)})
     return friends
