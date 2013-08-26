@@ -23,7 +23,11 @@ def getName(uid, access_token):
     query = 'select name from user where uid='+str(uid)
     jfriend_data = FQLquery(query, access_token)
     friend_data = json.loads(jfriend_data)
-    return friend_data['data'][0]['name']
+    try:
+        name = friend_data['data'][0]['name']
+    except IndexError:
+        name = ''
+    return name
 
 def getFriendUIDList(uid, access_token):
     fql_query = 'select uid2 from friend where uid1='+str(uid)
