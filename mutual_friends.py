@@ -12,7 +12,7 @@ from string import Template
     
 class MutualFriendsChecker(frdholder.FriendListHolder):
     def __init__(self, selfuid, access_token):
-        frdholder.FriendListHolder.__init__(selfuid, access_token)
+        frdholder.FriendListHolder.__init__(self, selfuid, access_token)
         self.mutualfrd_pairs = self.get_mutual_friends(self.selfuid)
         
     def get_mutual_friends(self, uid):
