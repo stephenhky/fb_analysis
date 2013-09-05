@@ -35,6 +35,8 @@ class FriendResistanceDistancesWrapper:
                                                          edges=pairs)
     
     def getResistance(self, uid1, uid2):
-        #idx1 = self.resistdist.nodesIdx[uid1]
-        #idx2 = self.resistdist.nodesIdx[uid2]
         return self.resistdist.getResistance(uid1, uid2)
+        
+    def pickle_data(self, pickle_prefix):
+        pickle.dump(self.friends, open(pickle_prefix+'_friends.fb', 'wb'))
+        pickle.dump(self.friends, open(pickle_prefix+'_mutfrd.fb', 'wb'))
