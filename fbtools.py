@@ -19,7 +19,7 @@ def FQLquery(fql_query, access_token):
     url = fql_query_prefix + quoted_query
     return urllib2.urlopen(url).read()
 
-def getName(uid, access_token):
+def getName(uid, access_token=''):
     query = 'select name from user where uid='+str(uid)
     jfriend_data = FQLquery(query, access_token)
     friend_data = json.loads(jfriend_data)
