@@ -10,7 +10,8 @@ import resistancedist as resist
 import pickle
 import networkx as nx
 
-frdpairdicttotuple = lambda item: (item[u'uid1'], item[u'uid2'])
+frdpairdicttotuple = lambda item: (item[unicode('uid1')],
+                                        item[unicode('uid2')])
 
 class FriendResistanceDistancesWrapper:
     def __init__(self, selfuid=None, access_token=None, pickle_prefix=None):
@@ -42,7 +43,7 @@ class FriendResistanceDistancesWrapper:
         pickle.dump(self.friends, open(pickle_prefix+'_friends.fb', 'wb'))
         pickle.dump(self.friends, open(pickle_prefix+'_mutfrd.fb', 'wb'))
         
-    def compute_friend_islands(self, upperbound=0.2):
+    def compute_friend_islands_resistdist(self, upperbound=0.2):
         g = nx.Graph()
         g.add_nodes_from(self.friends)
         for i in range(len(self.friends)):
