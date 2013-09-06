@@ -8,6 +8,7 @@ Created on Thu Sep  5 14:41:13 2013
 import mutual_friends as mf
 import resistancedist as resist
 import pickle
+import networkx as nx
 
 frdpairdicttotuple = lambda item: (item[u'uid1'], item[u'uid2'])
 
@@ -40,3 +41,16 @@ class FriendResistanceDistancesWrapper:
     def pickle_data(self, pickle_prefix):
         pickle.dump(self.friends, open(pickle_prefix+'_friends.fb', 'wb'))
         pickle.dump(self.friends, open(pickle_prefix+'_mutfrd.fb', 'wb'))
+        
+    def compute_friend_islands(self, upperbound=0.2):
+        g = nx.Graph()
+        g.add_nodes_from(self.friends)
+        for i in range(len(self.friends)):
+            for j in range(i-1):
+                uid1 = self.friends[i]
+                uid2 = self.friends[j]
+                dist = self.getResistance(uid1, uid2)
+                if dist < upperbound:
+                    g.add_edge(uid1, uid2)
+        return nx.connected_components(g)
+                    
